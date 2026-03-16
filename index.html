@@ -18,6 +18,14 @@
         <source src="audio/click.mp3" type="audio/mpeg">
     </audio>
 
+    <audio id="lose-sound" preload="auto">
+        <source src="audio/lose.mp3" type="audio/mpeg">
+    </audio>
+
+    <audio id="game-over-sound" preload="auto">
+        <source src="audio/game-over.mp3" type="audio/mpeg">
+    </audio>
+
     <div id="game-container">
         <section id="start-screen" class="screen active">
             <div class="content">
@@ -131,6 +139,17 @@
         </section>
     </div>  
 
+
+
+
+    <div id="victory-modal" class="custom-modal">
+        <div class="victory-content">
+            <div class="victory-icon">🏆</div>
+            <h2 id="victory-title">Incrível!</h2>
+            <p id="victory-message">Você é demais, meu amor.</p>
+            <button class="btn-main" id="btn-victory-continue">Continuar Jornada</button>
+        </div>
+    </div>
 
 
     <script src="js/script.js"></script>

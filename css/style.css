@@ -190,14 +190,21 @@ h1 {
     position: absolute;
     width: 100%;
     height: 100%;
-    z-index: 1; /* Atrás de tudo */
+    top: 0;
+    left: 0;
+    /* O segredo está aqui: deve ser maior que o do modal (2000) */
+    z-index: 3000; 
+    pointer-events: none; /* Garante que os corações não bloqueiem os cliques nos botões */
 }
 
 .heart {
     position: absolute;
-    color: rgba(255, 77, 109, 0.4);
+    color: rgba(255, 77, 109, 0.8); /* Aumentei a opacidade para brilharem mais */
     bottom: -50px;
+    z-index: 3000;
+    pointer-events: none;
     animation: floatUp 4s linear infinite;
+    text-shadow: 0 0 5px rgba(255, 77, 109, 0.5); /* Um brilhinho leve */
 }
 
 /* Animations */
@@ -458,4 +465,63 @@ h1 {
     margin-top: 10px;
     font-size: 1.1rem;
     animation: fadeIn 0.5s ease-in;
+}
+
+
+
+
+
+
+
+
+.custom-modal {
+    display: none; /* Escondido por padrão */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(44, 0, 14, 0.85); /* Vinho transparente */
+    backdrop-filter: blur(8px); /* Efeito de desfoque no fundo */
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.5s ease;
+}
+
+.victory-content {
+    background: linear-gradient(135deg, #4a0018, #2c000e);
+    padding: 40px;
+    border-radius: 30px;
+    border: 3px solid #ff4d6d;
+    text-align: center;
+    box-shadow: 0 0 50px rgba(255, 77, 109, 0.4);
+    max-width: 90%;
+    width: 400px;
+    transform: scale(0.8);
+    animation: popIn 0.5s cubic-bezier(0.17, 0.89, 0.32, 1.49) forwards;
+}
+
+.victory-icon {
+    font-size: 4rem;
+    margin-bottom: 20px;
+}
+
+#victory-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.5rem;
+    color: #ff4d6d;
+    margin-bottom: 15px;
+}
+
+#victory-message {
+    color: #ffb3c1;
+    margin-bottom: 30px;
+    font-size: 1.1rem;
+    line-height: 1.4;
+}
+
+/* Animação de entrada do cartão */
+@keyframes popIn {
+    to { transform: scale(1); opacity: 1; }
 }

@@ -4,12 +4,25 @@ document.addEventListener('DOMContentLoaded', () => {
     bgMusic.volume = 0.05; // Ajuste o volume para 50% para não ser muito alto
 
     const clickSound = document.getElementById('click-sound');
-
-    // Função para tocar o som de clique
     function playClick() {
         // Reinicia o áudio para o início (caso ela clique muito rápido)
         clickSound.currentTime = 0; 
         clickSound.play();
+    }
+
+    const loseSound = document.getElementById('lose-sound');
+    loseSound.volume = 0.30;
+    function playLose() {
+        loseSound.currentTime = 0; // Reseta para o início
+        loseSound.play();
+    }
+    
+
+    const gameOverSound = document.getElementById('game-over-sound');
+    gameOverSound.volume = 0.50;
+    function playGameOver() {
+        gameOverSound.currentTime = 0;
+        gameOverSound.play();
     }
 
     // Seleciona TODOS os botões da página e adiciona o som automaticamente
@@ -45,6 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Clique nas fases para iniciar o jogo correspondente
     levels.forEach(level => {
         level.addEventListener('click', () => {
+            playClick();
             // Só permite clicar se a fase estiver desbloqueada
             if (level.classList.contains('unlocked')) {
                 const id = level.getAttribute('data-level');
@@ -117,7 +131,11 @@ document.addEventListener('DOMContentLoaded', () => {
             tempoRestante--;
             document.getElementById('seconds').innerText = tempoRestante;
             if (tempoRestante <= 0) {
-                proximaPalavra("O tempo acabou! Tente esta nova palavra.");
+                clearInterval(timerInterval);
+                playGameOver();
+                setTimeout(() => {
+                    proximaPalavra("O tempo acabou! Tente esta nova palavra.");
+                }, 500);
             }
         }, 1000);
     }
@@ -166,10 +184,12 @@ document.addEventListener('DOMContentLoaded', () => {
             atualizarDisplayForca();
         } else {
             erros++;
+            playLose();
             document.getElementById('word-display').classList.add('shake');
             setTimeout(() => document.getElementById('word-display').classList.remove('shake'), 500);
             
             if (erros >= 3) {
+                playGameOver();
                 proximaPalavra("Quase! Vamos tentar outra palavra?");
             } else {
                 atualizarDisplayForca();
@@ -184,7 +204,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function vitoriaFase1() {
         clearInterval(timerInterval);
-        alert("Você conseguiu, meu amor! Fase 1 concluída. ❤️");
+        
+        mostrarVitoria(
+            "Você conseguiu, meu amor!", 
+            "Sua inteligência me encanta tanto quanto seu sorriso. A Fase 1 foi concluída com sucesso! ❤️", 
+            () => {
+                // Tudo que acontecia depois do OK do alert vai aqui
+                document.getElementById('level-1').classList.add('completed');
+                const lv2 = document.getElementById('level-2');
+                lv2.classList.remove('locked');
+                lv2.classList.add('unlocked');
+                document.getElementById('line-1-2').classList.add('filled');
+                voltarAoMapa();
+            }
+        );
         
         // 1. Marca a fase 1 como completada (o pulso vai sumir daqui)
         const lv1 = document.getElementById('level-1');
@@ -296,17 +329,32 @@ document.addEventListener('DOMContentLoaded', () => {
                 setTimeout(vitoriaFase2, 500);
             }
         } else {
+            playLose();
+            
             setTimeout(() => {
                 carta1.classList.remove('flip');
                 carta2.classList.remove('flip');
                 cartasSelecionadas = [];
                 bloqueado = false;
+                
             }, 1000);
+            
         }
     }
 
     function vitoriaFase2() {
-        alert("Incrível! Nossa sintonia é perfeita. Fase 2 concluída! ❤️");
+        mostrarVitoria(
+            "Sintonia Perfeita!", 
+            "Nossas memórias são o meu maior tesouro. Você provou que lembra de cada detalhe nosso! ❤️", 
+            () => {
+                document.getElementById('level-2').classList.add('completed');
+                const lv3 = document.getElementById('level-3');
+                lv3.classList.remove('locked');
+                lv3.classList.add('unlocked');
+                document.getElementById('line-2-3').classList.add('filled');
+                voltarAoMapa();
+            }
+        );
         
         // 1. Marca a fase 2 como completada
         const lv2 = document.getElementById('level-2');
@@ -419,5 +467,42 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Você pode criar uma tela final ou apenas um alerta caprichado
         alert("Parabéns, meu amor! Você completou toda a jornada. Minha vida é muito mais feliz com você ao meu lado. Te amo eternamente! ❤️");
+    }
+
+
+
+
+
+    // 1. Função para disparar a chuva de corações
+    function chuvaDeCoracoes() {
+        for (let i = 0; i < 50; i++) {
+            setTimeout(() => {
+                createHeart(); 
+            }, i * 50);
+        }
+    }
+
+    // 2. Função para mostrar o Modal de Vitória
+    function mostrarVitoria(titulo, mensagem, callbackAoFechar) {
+        const modal = document.getElementById('victory-modal');
+        document.getElementById('victory-title').innerText = titulo;
+        document.getElementById('victory-message').innerText = mensagem;
+        
+        modal.style.display = 'flex';
+        chuvaDeCoracoes();
+        
+        // Se você tiver um som de vitória, toque aqui:
+        // playSuccessSound();
+
+        const btn = document.getElementById('btn-victory-continue');
+        
+        // Remove eventos antigos para não duplicar
+        const novoBtn = btn.cloneNode(true);
+        btn.parentNode.replaceChild(novoBtn, btn);
+
+        novoBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+            if (callbackAoFechar) callbackAoFechar();
+        });
     }
 });
