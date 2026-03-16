@@ -1,0 +1,461 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #2c000e; /* Vinho Bem Escuro */
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+    height: 100vh;
+}
+
+#game-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Sistema de Telas */
+.screen {
+    display: none; /* Esconde por padrão */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 10;
+}
+
+.screen.active {
+    display: flex; /* Mostra apenas a ativa */
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+.content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+/* Typography */
+h1 {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(3rem, 10vw, 5rem);
+    color: #ff4d6d;
+    margin-bottom: 10px;
+    text-shadow: 2px 4px 10px rgba(0,0,0,0.3);
+}
+
+.map-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 3rem;
+    color: #ff4d6d;
+    margin-bottom: 40px;
+}
+
+/* Buttons */
+.btn-main {
+    background-color: #ff4d6d;
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    margin: 35px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
+}
+
+.btn-main:hover {
+    transform: scale(1.05);
+    background-color: #c9184a;
+}
+
+/* Mapa de Fases */
+.map-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.level-wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.heart-pulse {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 3px solid #ff4d6d; /* Cor rosa/vermelha vibrante */
+    box-sizing: border-box;
+    pointer-events: none; /* Garante que o clique passe para o botão abaixo */
+    animation: pulseMap 2s infinite;
+}
+
+/* Mostra o pulso APENAS na fase desbloqueada que NÃO foi completada ainda */
+.level-node.unlocked:not(.completed) .heart-pulse {
+    display: block;
+}
+
+/* Opcional: Deixar a fase completada com um visual diferente (ex: um check ou cor sólida) */
+.level-node.completed {
+    background-color: #ff4d6d;
+    border-color: #ffb3c1;
+    opacity: 1;
+}
+
+.level-node.completed::after {
+    content: '✔️'; /* Um checkzinho de missão cumprida */
+    position: absolute;
+    font-size: 1rem;
+    bottom: -5px;
+    right: -5px;
+}
+
+@keyframes pulseMap {
+    0% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(1.8); /* O círculo expande até quase o dobro */
+        opacity: 0;           /* E desaparece completamente */
+    }
+}
+
+.level-label{
+    margin-top: 15px;
+}
+
+
+.level-node {
+    width: 70px;
+    height: 70px;
+    background: #4a0018;
+    border: 3px solid #5e001f;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    position: relative;
+    transition: 0.4s;
+}
+
+/*Acrecentar aqui o hover*/
+
+.level-node.unlocked {
+    background: #c9184a;
+    border-color: #ff4d6d;
+    cursor: pointer;
+}
+
+.level-node.locked {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.path-line {
+    width: 150px;
+    height: 5px;
+    background: #4a0018;
+    border-radius: 3px;
+    margin-bottom: 35px;
+}
+
+/* Corações */
+.heart-icon { font-size: 4rem; animation: pulse 1.5s infinite; }
+
+.floating-hearts {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1; /* Atrás de tudo */
+}
+
+.heart {
+    position: absolute;
+    color: rgba(255, 77, 109, 0.4);
+    bottom: -50px;
+    animation: floatUp 4s linear infinite;
+}
+
+/* Animations */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+@keyframes floatUp { to { transform: translateY(-110vh) rotate(360deg); opacity: 0; } }
+
+
+
+
+
+
+
+/* --- ESTILOS DA FORCA --- */
+#game-phase-1 {
+    padding: 20px;
+}
+
+.game-header {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    max-width: 400px;
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    color: #ffb3c1;
+}
+
+#word-display {
+    font-size: 2.5rem;
+    letter-spacing: 12px;
+    color: #ff4d6d;
+    margin-bottom: 40px;
+    text-transform: uppercase;
+}
+
+#keyboard {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    max-width: 500px;
+    margin-bottom: 30px;
+}
+
+.key {
+    background: #4a0018;
+    border: 1px solid #ff4d6d;
+    color: white;
+    padding: 10px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.key:hover:not(:disabled) {
+    background: #ff4d6d;
+}
+
+.key:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.hint {
+    margin-bottom: 20px;
+    font-style: italic;
+    color: #ffb3c1;
+}
+
+/* Animação de erro (balançar) */
+.shake {
+    animation: shake 0.5s;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
+
+
+
+
+
+
+/* --- ESTILOS DO JOGO DE MEMÓRIA --- */
+.memory-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    perspective: 1000px; /* Necessário para o efeito 3D */
+    margin-bottom: 30px;
+}
+
+.memory-card {
+    width: 80px;
+    height: 80px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+    cursor: pointer;
+}
+
+.memory-card.flip {
+    transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    font-size: 2rem;
+}
+
+/* Verso da carta (o que ela vê antes de clicar) */
+.card-back {
+    background-color: #4a0018;
+    border: 2px solid #ff4d6d;
+    color: #ff4d6d;
+}
+
+/* Frente da carta (o conteúdo revelado) */
+.card-front {
+    background-color: #fff;
+    transform: rotateY(180deg);
+}
+
+.memory-card.matched {
+    cursor: default;
+    animation: pulseMatch 0.5s ease-in-out;
+}
+
+@keyframes pulseMatch {
+    0% { transform: scale(1) rotateY(180deg); }
+    50% { transform: scale(1.1) rotateY(180deg); }
+    100% { transform: scale(1) rotateY(180deg); }
+}
+
+
+
+
+
+
+
+/* --- ESTILOS DA FASE 3 --- */
+#flashlight-container {
+    width: 100vw;
+    height: 100vh;
+    background-color: #1a000a; /* Fundo quase preto */
+    position: relative;
+    overflow: hidden;
+    touch-action: none; /* Importante para mobile não dar scroll ao mover o dedo */
+}
+
+#darkness {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Substituímos o clip-path por um gradiente radial */
+    background: radial-gradient(
+        circle 100px at var(--x, 50%) var(--y, 50%), 
+        transparent 10%, 
+        rgba(255, 77, 109, 0.2) 70%,  /* Brilho suave (Vinho/Rosa) */
+        rgba(26, 0, 10, 0.98) 100%    /* Escuridão total nas bordas */
+    );
+    z-index: 5;
+    pointer-events: none;
+    transition: background 0.05s ease; /* Suaviza o movimento */
+}
+
+.hidden-item {
+    position: absolute;
+    font-size: 2.5rem;
+    cursor: pointer;
+    z-index: 2;
+    opacity: 0.0;
+    filter: grayscale(100%); /* Fica cinza até ser achado */
+    transition: 0.3s;
+}
+
+.hidden-item.found {
+    filter: grayscale(0%);
+    transform: scale(1.5);
+    opacity: 1;
+}
+
+#phase-3-instr {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+    color: #ffb3c1;
+    font-style: italic;
+    z-index: 10;
+}
+
+/* Modal Final */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.9);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: #2c000e;
+    padding: 30px;
+    border: 2px solid #ff4d6d;
+    border-radius: 20px;
+    text-align: center;
+}
+
+#final-answer {
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    margin: 15px 0;
+    width: 100%;
+    text-align: center;
+}
+
+.secret-area {
+    margin-top: 20px;
+    min-height: 50px;
+}
+
+.btn-escondido-amor {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    opacity: 0.05; /* Quase invisível */
+    transition: opacity 0.5s ease;
+}
+
+.btn-escondido-amor:hover {
+    opacity: 0.2; /* Dá uma leve pista quando o mouse passa por cima */
+}
+
+.hidden-text {
+    display: none; /* Escondido até o clique */
+    color: #ff4d6d;
+    font-weight: bold;
+    margin-top: 10px;
+    font-size: 1.1rem;
+    animation: fadeIn 0.5s ease-in;
+}

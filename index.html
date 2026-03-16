@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nosso Destino: O Jogo do Amor</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <audio id="bg-music" loop preload="auto">
+        <source src="audio/musica-tema.mp3" type="audio/mpeg">
+        Seu navegador não suporta áudio.
+    </audio>
+
+    <audio id="click-sound" preload="auto">
+        <source src="audio/click.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="game-container">
+        <section id="start-screen" class="screen active">
+            <div class="content">
+                <div class="heart-icon">❤️</div>
+                <h1>Para Meu Amor</h1>
+                <p>Uma pequena jornada sobre nós dois.</p>
+                <button id="btn-start" class="btn-main">Iniciar Jornada</button>
+            </div>
+        </section>
+
+        <section id="map-screen" class="screen">
+            <h2 class="map-title">Nossa Trajetória</h2>
+            
+            <div class="map-container">
+                <div class="level-wrapper">
+                    <div class="level-node unlocked" id="level-1" data-level="1">
+                        <span class="level-number">1</span>
+                        <div class="heart-pulse"></div>
+                    </div>
+                    <p class="level-label">Sentimento</p>
+                </div>
+
+                <div class="path-line" id="line-1-2"></div>
+
+                <div class="level-wrapper">
+                    <div class="level-node locked" id="level-2" data-level="2">
+                        <span class="level-number">2</span>
+                        <div class="heart-pulse"></div>
+                    </div>
+                    <p class="level-label">Memórias</p>
+                </div>
+
+                <div class="path-line" id="line-2-3"></div>
+
+                <div class="level-wrapper">
+                    <div class="level-node locked" id="level-3" data-level="3">
+                        <span class="level-number">3</span>
+                        <div class="heart-pulse"></div>
+                    </div>
+                    <p class="level-label">O Mistério</p>
+                </div>
+            </div>
+
+            <button style="margin-top: 50px;" class="btn-main" id="btn-back-to-start">← voltar</button>
+        </section>
+
+        <div class="floating-hearts"></div>
+
+
+        <section id="game-phase-1" class="screen">
+            <div class="game-header">
+                <div id="timer">Tempo: <span id="seconds">30</span>s</div>
+                <div id="lives">❤️❤️❤️</div>
+            </div>
+
+            <div class="word-container">
+                <h2 id="word-display">_ _ _ _ _</h2>
+            </div>
+
+            <p class="hint">Dica: Um sentimento que sinto por você...</p>
+
+            <div id="keyboard">
+                </div>
+
+            <button class="btn-main btn-back" onclick="voltarAoMapa()">← Desistir</button>
+            
+        </section>
+
+
+        <section id="game-phase-2" class="screen">
+            <div class="game-header">
+                <h2 class="phase-title">Nossas Memórias</h2>
+                <div id="memory-stats">Pares: <span id="matches">0</span> / 8</div>
+            </div>
+
+            <div id="memory-grid" class="memory-grid">
+                </div>
+
+            <button class="btn-main btn-back" onclick="voltarAoMapa()">← Desistir</button>
+        </section>
+
+
+
+
+        <section id="game-phase-3" class="screen">
+            <div id="flashlight-container">
+                <div id="darkness"></div>
+                
+                <div class="hidden-item" id="item-1" data-found="false">🎁</div>
+                <div class="hidden-item" id="item-2" data-found="false">🎁</div>
+                <div class="hidden-item" id="item-3" data-found="false">🎁</div>
+
+                <div id="phase-3-instr">Encontre as 3 relíquias escondidas no escuro...</div>
+            </div>
+
+            <div id="final-modal" class="modal">
+                <div class="modal-content">
+                    <h3>Que mulher inteligente!</h3>
+                    <p>Para abrir a caixa, digite a senha:</p>
+                    <p><strong>Dica: existe um botão oculto</strong></p>
+                    
+                    <input type="text" id="final-answer" placeholder="Analise com cuidado">
+                    <button class="btn-main" id="btn-unlock-final">Abrir Caixa</button>
+
+                    <div class="secret-area">
+                        <button class="btn-escondido-amor" id="btn-escondido-amor">❤️</button> 
+                        <p id="password-hint" class="hidden-text">Senha: eu te amo</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>  
+
+
+
+    <script src="js/script.js"></script>
+</body>
+</html>
