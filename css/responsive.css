@@ -17,7 +17,6 @@
         min-height: 100vh;
     }
 
-    /* 2. Sistema de Telas - Correção de Sobreposição */
     .screen {
         display: none; /* Garante que fiquem escondidas */
         position: relative; 
@@ -49,7 +48,9 @@
         margin-bottom: 20px;
     }
 
+    /* Mapa de Fases */
     .map-container {
+        flex-direction: column;
         gap: 10px;
     }
 

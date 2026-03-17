@@ -1,32 +1,57 @@
+// 1. Declaramos as funções FORA para que todo o seu script consiga usá-las
+let playClick, playLose, playGameOver, playFaseConcluida;
+
 document.addEventListener('DOMContentLoaded', () => {
 
+    // --- CONFIGURAÇÃO DA MÚSICA DE FUNDO ---
     const bgMusic = document.getElementById('bg-music');
-    bgMusic.volume = 0.05; // Ajuste o volume para 50% para não ser muito alto
+    if (bgMusic) {
+        bgMusic.volume = 0.03; // Reduzi para 3% (quase um sussurro, ideal para o iPhone)
+    }
 
+    // --- CONFIGURAÇÃO DOS EFEITOS (VOLUME NO MÁXIMO) ---
     const clickSound = document.getElementById('click-sound');
-    function playClick() {
-        // Reinicia o áudio para o início (caso ela clique muito rápido)
-        clickSound.currentTime = 0; 
-        clickSound.play();
-    }
-
     const loseSound = document.getElementById('lose-sound');
-    loseSound.volume = 0.30;
-    function playLose() {
-        loseSound.currentTime = 0; // Reseta para o início
-        loseSound.play();
-    }
-    
-
     const gameOverSound = document.getElementById('game-over-sound');
-    gameOverSound.volume = 0.50;
-    function playGameOver() {
-        gameOverSound.currentTime = 0;
-        gameOverSound.play();
-    }
+    const faseConluidaSound = document.getElementById('fase-concluida-sound')
 
-    // Seleciona TODOS os botões da página e adiciona o som automaticamente
-    document.querySelectorAll('button').forEach(botao => {
+    // Definimos volumes máximos para os efeitos "cortarem" a música
+    if (clickSound) clickSound.volume = 1.0;
+    if (loseSound) loseSound.volume = 0.3;
+    if (gameOverSound) gameOverSound.volume = 0.5;
+    if (faseConluidaSound) gameOverSound.volume = 0.1;
+
+    // --- DEFINIÇÃO DAS FUNÇÕES DE PLAY ---
+    playClick = () => {
+        if (clickSound) {
+            clickSound.currentTime = 0;
+            clickSound.play().catch(e => console.log("Erro ao tocar click:", e));
+        }
+    };
+
+    playLose = () => {
+        if (loseSound) {
+            loseSound.currentTime = 0;
+            loseSound.play().catch(e => console.log("Erro ao tocar lose:", e));
+        }
+    };
+
+    playGameOver = () => {
+        if (gameOverSound) {
+            gameOverSound.currentTime = 0;
+            gameOverSound.play().catch(e => console.log("Erro ao tocar game-over:", e));
+        }
+    };
+
+    playFaseConcluida = () => {
+        if (faseConluidaSound) {
+            faseConluidaSound.currentTime = 0;
+            faseConluidaSound.play().catch(e => console.log("Erro ao tocar faseconcluida:", e));
+        }
+    };
+
+    // --- APLICAÇÃO AUTOMÁTICA NOS BOTÕES ---
+    document.querySelectorAll('button, .level-node').forEach(botao => {
         botao.addEventListener('click', playClick);
     });
 
@@ -204,6 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function vitoriaFase1() {
         clearInterval(timerInterval);
+        playFaseConcluida();
         
         mostrarVitoria(
             "Você conseguiu, meu amor!", 
