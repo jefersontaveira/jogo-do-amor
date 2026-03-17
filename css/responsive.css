@@ -1,0 +1,74 @@
+/* --- DISPOSITIVOS MÓVEIS (Telas até 768px) --- */
+@media screen and (max-width: 768px) {
+    
+    /* Exemplo: Diminuir o tamanho das fontes no celular */
+    h1 {
+        font-size: 2rem;
+    }
+
+    .content p{
+        text-align: center;
+    }
+
+
+    .map-title{
+        font-size: 2rem;
+    }
+
+    .map-container {
+        flex-direction: column;
+        gap: 1px;
+        padding: 40px 0;
+    }
+
+    .path-line {
+        /* Invertemos os papéis */
+        width: 4px;        /* Agora a espessura é na largura */
+        height: 30px;      /* O comprimento agora é na altura */
+        margin: 10px 0;    /* Espaço vertical entre a linha e os círculos */
+        
+        /* Garantir que a animação de preenchimento (se houver) acompanhe */
+        background: #4a0018; 
+    }
+
+    /* Se você usa uma animação para "preencher" a linha quando liberada */
+    .path-line.filled {
+        background: #ff4d6d;
+        box-shadow: 0 0 10px #ff4d6d;
+    }
+
+    .btn-main {
+        margin-top: 0;
+    }
+
+
+
+
+
+
+
+    /* Exemplo: Ajustar a grade de memória para 3 colunas em vez de 4 */
+    .memory-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+    }
+
+    /* Ajustar o tamanho das cartas para caber em telas menores */
+    .memory-card {
+        width: 70px;
+        height: 70px;
+    }
+
+    /* Ajustar o modal de vitória para não ocupar a tela toda */
+    .victory-content {
+        padding: 20px;
+        width: 85%;
+    }
+}
+
+/* --- CELULARES MUITO PEQUENOS (Telas até 480px) --- */
+@media screen and (max-width: 480px) {
+    .memory-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 colunas apenas */
+    }
+}
