@@ -1,74 +1,213 @@
-/* --- DISPOSITIVOS MÓVEIS (Telas até 768px) --- */
-@media screen and (max-width: 768px) {
-    
-    /* Exemplo: Diminuir o tamanho das fontes no celular */
-    h1 {
-        font-size: 2rem;
+/* ============================================================
+   CONFIGURAÇÕES GERAIS DE RESPONSIVIDADE (MOBILE)
+   ============================================================ */
+
+@media (max-width: 768px) {
+    /* 1. Ajuste de Scroll e Body */
+    body {
+        overflow-y: auto; 
+        height: auto;
+        min-height: 100vh;
+        position: relative;
+    }
+
+    #game-container {
+        display: block; /* Permite que as seções empilhem e rolem */
+        height: auto;
+        min-height: 100vh;
+    }
+
+    /* 2. Sistema de Telas - Correção de Sobreposição */
+    .screen {
+        display: none; /* Garante que fiquem escondidas */
+        position: relative; 
+        width: 100%;
+        min-height: 100vh;
+        padding: 40px 15px;
+        box-sizing: border-box;
     }
 
     .content p{
         text-align: center;
     }
 
+    /* O SEGREDO: Só ativa o flex se a tela estiver com a classe .active */
+    .screen.active {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start; /* Começa do topo */
+    }
 
-    .map-title{
-        font-size: 2rem;
+    /* 3. Ajuste do Mapa (Vertical) */
+    #map-screen.active {
+        padding-top: 30px;
+    }
+
+    .map-title {
+        font-size: 2.2rem;
+        margin-bottom: 20px;
     }
 
     .map-container {
-        flex-direction: column;
-        gap: 1px;
-        padding: 40px 0;
+        gap: 10px;
     }
 
+    /* Transforma a linha do caminho em vertical */
     .path-line {
-        /* Invertemos os papéis */
-        width: 4px;        /* Agora a espessura é na largura */
-        height: 30px;      /* O comprimento agora é na altura */
-        margin: 10px 0;    /* Espaço vertical entre a linha e os círculos */
-        
-        /* Garantir que a animação de preenchimento (se houver) acompanhe */
-        background: #4a0018; 
+        width: 4px;
+        height: 40px;
+        margin: 5px 0;
     }
 
-    /* Se você usa uma animação para "preencher" a linha quando liberada */
-    .path-line.filled {
-        background: #ff4d6d;
-        box-shadow: 0 0 10px #ff4d6d;
+    .level-node {
+        width: 60px;
+        height: 60px;
     }
 
-    .btn-main {
-        margin-top: 0;
+    /* 4. Ajuste da Fase 1 (Forca) */
+    #game-phase-1.active #word-display {
+        font-size: 1.8rem;
+        letter-spacing: 5px;
+        margin: 20px 0;
+        white-space: nowrap;
     }
 
+    #keyboard {
+        grid-template-columns: repeat(6, 1fr); /* 6 colunas no mobile */
+        gap: 5px;
+        width: 100%;
+    }
 
+    .key {
+        padding: 15px 0; /* Maior área de toque para o dedo */
+        font-size: 1rem;
+    }
 
-
-
-
-
-    /* Exemplo: Ajustar a grade de memória para 3 colunas em vez de 4 */
-    .memory-grid {
-        grid-template-columns: repeat(3, 1fr);
+    /* 5. Ajuste da Fase 2 (Memória) */
+    #memory-grid {
+        grid-template-columns: repeat(4, 1fr); /* 4 colunas de cartas */
         gap: 8px;
     }
 
-    /* Ajustar o tamanho das cartas para caber em telas menores */
     .memory-card {
         width: 70px;
         height: 70px;
     }
 
-    /* Ajustar o modal de vitória para não ocupar a tela toda */
-    .victory-content {
-        padding: 20px;
+    .card-front, .card-back {
+        font-size: 1.5rem;
+    }
+
+    /* 6. Ajuste da Fase 3 (Misterio/Lanterna) */
+    #flashlight-container {
+        height: 80vh; /* Garante que caiba na tela com os botões */
+    }
+
+    /* 7. Botões e Modais */
+    .btn-main {
         width: 85%;
+        max-width: 300px;
+        padding: 12px;
+        font-size: 1rem;
+        margin: 20px 0;
+    }
+
+    .victory-content {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .phase-title{
+        font-size: 1.2rem;
+    }
+
+
+
+
+    A Fase 3 é a mais sensível no mobile por causa do efeito da lanterna. Como ela depende de coordenadas exatas e do toque, a responsividade precisa garantir que o modal não fique gigante e que os itens escondidos sejam fáceis de "iluminar" com o dedo.
+
+Adicione este bloco ao seu @media (max-width: 768px) no arquivo style.css:
+
+CSS
+/* --- RESPONSIVIDADE DA FASE 3 (LANTERNA E ENIGMA) --- */
+
+@media (max-width: 768px) {
+    /* Ajuste do Container da Lanterna */
+    #flashlight-container {
+        height: 100vh; /* Ocupa a tela cheia para evitar scroll durante o jogo */
+        touch-action: none; /* Bloqueia o arrastar da página para focar na lanterna */
+    }
+
+    /* Ajuste do brilho da lanterna para o dedo */
+    #darkness {
+        /* Diminuímos um pouco o círculo para o mobile (80px) para ficar mais desafiador */
+        background: radial-gradient(
+            circle 80px at var(--x, 50%) var(--y, 50%), 
+            transparent 10%, 
+            rgba(255, 77, 109, 0.2) 70%, 
+            rgba(26, 0, 10, 0.98) 100%
+        );
+    }
+
+    /* Tamanho dos itens escondidos no mobile */
+    .hidden-item {
+        font-size: 2rem; /* Um pouco menor para não entregar o esconderijo fácil */
+    }
+
+    /* Instrução na parte inferior */
+    #phase-3-instr {
+        font-size: 0.85rem;
+        bottom: 15px;
+        padding: 0 20px;
+    }
+
+    /* --- MODAL FINAL NO MOBILE --- */
+    .modal-content {
+        width: 85%; /* Ocupa quase a largura toda */
+        padding: 20px;
+        border-radius: 15px;
+    }
+
+    .modal-content h3 {
+        font-size: 1.5rem;
+    }
+
+    #final-answer {
+        font-size: 1rem;
+        padding: 12px;
+        margin: 10px 0;
+    }
+
+    /* Área do botão secreto ❤️ */
+    .secret-area {
+        margin-top: 15px;
+        min-height: 40px;
+    }
+
+    .btn-escondido-amor {
+        font-size: 1.2rem;
+        opacity: 0.1; /* No mobile o brilho da tela varia, deixamos um tiquinho mais visível */
+    }
+
+    .hidden-text {
+        font-size: 1rem;
     }
 }
 
-/* --- CELULARES MUITO PEQUENOS (Telas até 480px) --- */
-@media screen and (max-width: 480px) {
-    .memory-grid {
-        grid-template-columns: repeat(2, 1fr); /* 2 colunas apenas */
+/* Ajuste extremo para celulares muito pequenos (iPhone SE / Galaxy A0) */
+@media (max-width: 360px) {
+    #keyboard {
+        grid-template-columns: repeat(5, 1fr);
+    }
+    
+    .memory-card {
+        width: 60px;
+        height: 60px;
+    }
+
+    #word-display {
+        font-size: 1.4rem;
+        letter-spacing: 3px;
     }
 }

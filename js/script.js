@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Configurações da Fase 1
 
-    const palavrasAmorosas = ["AMOR"];
+    const palavrasAmorosas = ["CARINHO"];
     let palavraAtual = "";
     let letrasAdivinhadas = [];
     let erros = 0;

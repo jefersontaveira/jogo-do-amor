@@ -30,7 +30,14 @@ body {
     height: 100%;
     position: absolute;
     z-index: 10;
+    overflow-y: auto;
 }
+
+#map-screen {
+    overflow-y: auto; /* Libera o scroll vertical apenas aqui */
+    -webkit-overflow-scrolling: touch; /* Melhora o deslize no iPhone/iOS */
+}
+
 
 .screen.active {
     display: flex; /* Mostra apenas a ativa */
@@ -59,6 +66,9 @@ h1 {
     font-size: 3rem;
     color: #ff4d6d;
     margin-bottom: 40px;
+    z-index: 10;            /* Garante que fique acima de qualquer fundo */
+    text-align: center;
+    width: 100%;
 }
 
 /* Buttons */
@@ -84,8 +94,11 @@ h1 {
 /* Mapa de Fases */
 .map-container {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 15px;
+    justify-content: center;
+    gap: 20px; /* Espaço entre os níveis */
+    margin: 40px 0;
 }
 
 .level-wrapper{
