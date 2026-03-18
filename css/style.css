@@ -251,6 +251,22 @@ h1 {
     text-transform: uppercase;
 }
 
+.feedback-msg {
+    height: 25px; /* Reserva o espaço para não empurrar os outros elementos */
+    color: #ff4d6d;
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    text-align: center;
+}
+
+/* Classe que o JS vai adicionar para mostrar a mensagem */
+.feedback-msg.show {
+    opacity: 1;
+}
+
 #keyboard {
     display: grid;
     grid-template-columns: repeat(7, 1fr);

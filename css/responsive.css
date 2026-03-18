@@ -66,6 +66,10 @@
         height: 60px;
     }
 
+
+
+
+
     /* 4. Ajuste da Fase 1 (Forca) */
     #game-phase-1.active #word-display {
         font-size: 1.8rem;
@@ -83,6 +87,12 @@
     .key {
         padding: 15px 0; /* Maior área de toque para o dedo */
         font-size: 1rem;
+    }
+
+
+    .feedback-msg {
+        height: 5px;
+        font-size: 0.8rem;
     }
 
     /* 5. Ajuste da Fase 2 (Memória) */
@@ -124,16 +134,6 @@
     }
 
 
-
-
-    A Fase 3 é a mais sensível no mobile por causa do efeito da lanterna. Como ela depende de coordenadas exatas e do toque, a responsividade precisa garantir que o modal não fique gigante e que os itens escondidos sejam fáceis de "iluminar" com o dedo.
-
-Adicione este bloco ao seu @media (max-width: 768px) no arquivo style.css:
-
-CSS
-/* --- RESPONSIVIDADE DA FASE 3 (LANTERNA E ENIGMA) --- */
-
-@media (max-width: 768px) {
     /* Ajuste do Container da Lanterna */
     #flashlight-container {
         height: 100vh; /* Ocupa a tela cheia para evitar scroll durante o jogo */

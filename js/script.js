@@ -149,18 +149,38 @@ document.addEventListener('DOMContentLoaded', () => {
         forca.classList.add('active');
     }
 
+    function mostrarAviso(texto) {
+        const feedback = document.getElementById('game-feedback');
+        feedback.innerText = texto;
+        feedback.classList.add('show');
+
+        // Remove a mensagem depois de 2 segundos
+        setTimeout(() => {
+            feedback.classList.remove('show');
+        }, 2000);
+    }
+
     function iniciarTimer() {
         clearInterval(timerInterval);
         document.getElementById('seconds').innerText = tempoRestante;
+        
         timerInterval = setInterval(() => {
             tempoRestante--;
             document.getElementById('seconds').innerText = tempoRestante;
+            
             if (tempoRestante <= 0) {
                 clearInterval(timerInterval);
+                
+                // 1. Toca o som de Game Over
                 playGameOver();
+                
+                // 2. Mostra o aviso na tela (não bloqueia nada!)
+                mostrarAviso("O tempo acabou! Trocando palavra...");
+                
+                // 3. Espera um pouquinho para ela ler e já troca a palavra
                 setTimeout(() => {
-                    proximaPalavra("O tempo acabou! Tente esta nova palavra.");
-                }, 500);
+                    proximaPalavra(); 
+                }, 1500);
             }
         }, 1000);
     }
@@ -215,15 +235,15 @@ document.addEventListener('DOMContentLoaded', () => {
             
             if (erros >= 3) {
                 playGameOver();
-                proximaPalavra("Quase! Vamos tentar outra palavra?");
+                mostrarAviso("ôh meu amor, tenta de novo! ❤️");
+                proximaPalavra();
             } else {
                 atualizarDisplayForca();
             }
         }
     }
 
-    function proximaPalavra(mensagem) {
-        alert(mensagem);
+    function proximaPalavra() {
         iniciarForca(); // Reinicia com nova palavra
     }
 
@@ -517,7 +537,6 @@ document.addEventListener('DOMContentLoaded', () => {
         modal.style.display = 'flex';
         chuvaDeCoracoes();
         
-        // Se você tiver um som de vitória, toque aqui:
         // playSuccessSound();
 
         const btn = document.getElementById('btn-victory-continue');
