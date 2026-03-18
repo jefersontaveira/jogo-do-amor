@@ -149,12 +149,13 @@ document.addEventListener('DOMContentLoaded', () => {
         forca.classList.add('active');
     }
 
-    function mostrarAviso(texto) {
-        const feedback = document.getElementById('game-feedback');
+    function mostrarAviso(texto, elementoId = 'game-feedback') {
+        const feedback = document.getElementById(elementoId);
+        if (!feedback) return; // Segurança caso o ID não exista
+
         feedback.innerText = texto;
         feedback.classList.add('show');
 
-        // Remove a mensagem depois de 2 segundos
         setTimeout(() => {
             feedback.classList.remove('show');
         }, 2000);
@@ -175,7 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 playGameOver();
                 
                 // 2. Mostra o aviso na tela (não bloqueia nada!)
-                mostrarAviso("O tempo acabou! Trocando palavra...");
+                mostrarAviso("O tempo acabou! tenta de novo amor ❤️");
                 
                 // 3. Espera um pouquinho para ela ler e já troca a palavra
                 setTimeout(() => {
@@ -389,9 +390,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function vitoriaFase2() {
+        playFaseConcluida();
         mostrarVitoria(
-            "Sintonia Perfeita!", 
-            "Nossas memórias são o meu maior tesouro. Você provou que lembra de cada detalhe nosso! ❤️", 
+            "Que memória em!", 
+            "Nós iremos construir muitas memórias juntos. A fase 2 foi concluida! ❤️", 
             () => {
                 document.getElementById('level-2').classList.add('completed');
                 const lv3 = document.getElementById('level-3');
@@ -477,6 +479,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 if (itensAchados === 3) {
                     setTimeout(() => {
+                        playFaseConcluida();
                         document.getElementById('final-modal').style.display = 'flex';
                     }, 1000);
                 }
@@ -495,15 +498,19 @@ document.addEventListener('DOMContentLoaded', () => {
         btnEscondido.style.opacity = '1'; // Faz o coração brilhar ao ser achado
     });
 
-    // Verifica a senha digitada no input
     document.getElementById('btn-unlock-final').addEventListener('click', () => {
         const resposta = document.getElementById('final-answer').value.toLowerCase().trim();
         
-        // Usamos toLowerCase() e trim() para evitar erros de letra maiúscula ou espaço extra
         if (resposta === "eu te amo") {
             mostrarFinalFeliz();
         } else {
-            alert("A senha está correta? Procure melhor o segredo... ❤️");
+            playLose(); 
+            
+            mostrarAviso("Senha errada amor! ❤️", "final-feedback");
+            
+            const input = document.getElementById('final-answer');
+            input.classList.add('shake');
+            setTimeout(() => input.classList.remove('shake'), 500);
         }
     });
 

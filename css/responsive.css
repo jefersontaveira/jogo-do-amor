@@ -194,6 +194,21 @@
     .hidden-text {
         font-size: 1rem;
     }
+
+
+    #darkness {
+        background: radial-gradient(
+            circle 60px at var(--x, 50%) var(--y, 50%), /* Altere de 100px para 60px */
+            transparent 10%, 
+            rgba(255, 77, 109, 0.2) 70%,  
+            rgba(26, 0, 10, 0.98) 100% 
+        );
+    }
+
+
+    .hidden-item {
+        font-size: 1.5rem; /* Altere de 2.5rem para 1.5rem ou 1.2rem */
+    }
 }
 
 /* Ajuste extremo para celulares muito pequenos (iPhone SE / Galaxy A0) */
