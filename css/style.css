@@ -551,3 +551,94 @@ h1 {
 @keyframes popIn {
     to { transform: scale(1); opacity: 1; }
 }
+
+
+
+
+
+
+
+
+
+
+/* Container da celebração */
+#celebration-screen {
+    background: radial-gradient(circle, #4a0018, #1a000a);
+    display: none;
+    flex-direction: column;
+    z-index: 5000;
+}
+
+/* O Baú */
+.chest-wrapper {
+    width: 150px;
+    height: 120px;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.chest-wrapper:hover { transform: scale(1.1); }
+
+.chest-base {
+    width: 100%;
+    height: 70%;
+    background: #800e2a;
+    border: 4px solid #ff4d6d;
+    border-radius: 0 0 15px 15px;
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.chest-lid {
+    width: 100%;
+    height: 40%;
+    background: #ff4d6d;
+    border: 4px solid #ffb3c1;
+    border-radius: 15px 15px 0 0;
+    position: absolute;
+    top: 15px;
+    transform-origin: bottom;
+    transition: transform 0.8s ease-in-out;
+    z-index: 2;
+}
+
+/* Animação de Abrir */
+.chest-wrapper.open .chest-lid {
+    transform: rotateX(-110deg);
+}
+
+/* Vídeo em Tela Cheia */
+.video-container {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: black;
+    z-index: 6000;
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+#final-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Faz o vídeo preencher tudo sem sobrar bordas */
+}
+
+#btn-close-video {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 77, 109, 0.5);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+}

@@ -515,11 +515,53 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function mostrarFinalFeliz() {
-        // Esconde o modal
+        // 1. Esconde o modal da senha
         document.getElementById('final-modal').style.display = 'none';
-        
-        // Você pode criar uma tela final ou apenas um alerta caprichado
-        alert("Parabéns, meu amor! Você completou toda a jornada. Minha vida é muito mais feliz com você ao meu lado. Te amo eternamente! ❤️");
+        document.getElementById('flashlight-container').style.display = 'none';
+
+        // 2. Mostra a tela do baú
+        const celebrationScreen = document.getElementById('celebration-screen');
+        celebrationScreen.style.display = 'flex';
+        celebrationScreen.classList.add('active');
+
+        // 3. Configura o clique no baú
+        const chest = document.getElementById('chest-container');
+        chest.addEventListener('click', () => {
+            // Abre o baú visualmente
+            chest.classList.add('open');
+
+
+            // Espera a tampa abrir para soltar o vídeo
+            setTimeout(() => {
+                iniciarVideoFinal();
+            }, 800);
+        });
+    }
+
+    function iniciarVideoFinal() {
+        const videoOverlay = document.getElementById('video-overlay');
+        const video = document.getElementById('final-video');
+        const bgMusic = document.getElementById('bg-music');
+
+        // Para a música de fundo para não atrapalhar o vídeo
+        if (bgMusic) bgMusic.pause();
+
+        // Mostra o container do vídeo com transição
+        videoOverlay.style.display = 'block';
+        setTimeout(() => videoOverlay.style.opacity = '1', 50);
+
+        // Toca o vídeo
+        video.play();
+
+        // Botão para fechar o vídeo se ela quiser ver o mapa de novo
+        document.getElementById('btn-close-video').onclick = () => {
+            video.pause();
+            videoOverlay.style.opacity = '0';
+            setTimeout(() => {
+                videoOverlay.style.display = 'none';
+                if (bgMusic) bgMusic.play(); // Volta a música
+            }, 1000);
+        };
     }
 
 
@@ -543,12 +585,9 @@ document.addEventListener('DOMContentLoaded', () => {
         
         modal.style.display = 'flex';
         chuvaDeCoracoes();
-        
-        // playSuccessSound();
-
+    
         const btn = document.getElementById('btn-victory-continue');
         
-        // Remove eventos antigos para não duplicar
         const novoBtn = btn.cloneNode(true);
         btn.parentNode.replaceChild(novoBtn, btn);
 
