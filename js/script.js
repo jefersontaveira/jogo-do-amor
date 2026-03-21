@@ -123,7 +123,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Configurações da Fase 1
 
-    const palavrasAmorosas = ["CARINHO"];
+    const palavrasAmorosas = [
+        "AMOR",
+        "VIDA",       
+        "DOCE",       
+        "BEIJO",      
+        "LINDA",      
+        "AFETO",  
+        "DENGO",
+        "UNIAO",
+        "AMADA",
+        "PAIXAO",
+        "ABRACO",
+        "ETERNO",
+        "SINCERA",
+        "SORRISO",
+        "DESTINO",
+        "CARINHO",
+        "QUERIDA"
+    ]
     let palavraAtual = "";
     let letrasAdivinhadas = [];
     let erros = 0;
