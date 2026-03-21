@@ -157,10 +157,27 @@
     }
 
     /* Instrução na parte inferior */
-    #phase-3-instr {
-        font-size: 0.85rem;
-        bottom: 15px;
+   #phase-3-instr {
+        position: absolute;
+        /* Subimos para 80px para fugir da barra de botões do celular */
+        bottom: 80px; 
+        left: 0;
+        width: 100%;
+        text-align: center;
+        
+        /* Aumentamos muito o z-index para garantir que fique ACIMA da escuridão */
+        z-index: 1000; 
+        
+        color: #ffb3c1;
+        font-size: 0.9rem;
         padding: 0 20px;
+        box-sizing: border-box;
+        
+        /* IMPORTANTE: impede que o texto bloqueie o toque da lanterna */
+        pointer-events: none; 
+        
+        /* Sombra leve para ajudar a ler mesmo se passar por cima de algo claro */
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
     }
 
     /* --- MODAL FINAL NO MOBILE --- */
