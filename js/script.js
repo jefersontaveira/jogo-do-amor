@@ -519,7 +519,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('btn-unlock-final').addEventListener('click', () => {
         const resposta = document.getElementById('final-answer').value.toLowerCase().trim();
         
-        if (resposta === "Eu te amo") {
+        if (resposta === "eu te amo") {
             mostrarFinalFeliz();
         } else {
             playLose(); 
